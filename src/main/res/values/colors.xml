@@ -2,12 +2,11 @@
 <resources>
 
     <color name="pressed_blue">#0057A5</color>
-    <color name="blue">#0066CC</color>
+    <color name="blue">#ee9900</color>
     <!-- -->
     <color name="red">#C61800</color>
     <color name="light_red">#FF5039</color>
     <color name="green">#31B639</color>
-    <color name="light_green">#33E46D</color>
     <!-- -->
     <color name="grey_background">#ffe3e3e3</color>
     <color name="frame_background">#fff7f7f7</color>

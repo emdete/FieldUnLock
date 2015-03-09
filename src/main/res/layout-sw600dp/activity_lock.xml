@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="@string/battery_text_no_battery"
         android:id="@+id/battery"
-        android:textColor="@color/light_green"
+        android:textColor="@color/white_90"
         android:layout_below="@+id/date"
         android:layout_marginTop="5dp"
         android:layout_alignStart="@+id/date"
@@ -73,16 +73,15 @@
         android:textSize="25sp" />
 
     <TextView
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pinInput"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:inputType="numberPassword"
-        android:maxLength="6"
+        android:maxLength="8"
         android:numeric="integer"
         android:textColor="@color/white_90"
-        android:textSize="22sp"
+        android:textSize="32sp"
         android:layout_marginBottom="25dp"
         android:layout_above="@+id/ic_2" />
 

@@ -164,7 +164,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 			writeToJSON();
 
-			pinEntered = "";
+			setPIN("");
 		}
 	};
 
@@ -344,28 +344,19 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		battery = (TextView)findViewById(R.id.battery);
 		unlockText = (TextView)findViewById(R.id.unlockText);
 		pinInput = (TextView)findViewById(R.id.pinInput);
-		ImageButton ic_0 = (ImageButton) findViewById(R.id.ic_0);
-		ImageButton ic_1 = (ImageButton) findViewById(R.id.ic_1);
-		ImageButton ic_2 = (ImageButton) findViewById(R.id.ic_2);
-		ImageButton ic_3 = (ImageButton) findViewById(R.id.ic_3);
-		ImageButton ic_4 = (ImageButton) findViewById(R.id.ic_4);
-		ImageButton ic_5 = (ImageButton) findViewById(R.id.ic_5);
-		ImageButton ic_6 = (ImageButton) findViewById(R.id.ic_6);
-		ImageButton ic_7 = (ImageButton) findViewById(R.id.ic_7);
-		ImageButton ic_8 = (ImageButton) findViewById(R.id.ic_8);
-		ImageButton ic_9 = (ImageButton) findViewById(R.id.ic_9);
+		pinInput.setText(hashDa(pinEntered));
 
 		// Set onClick listeners
-		ic_0.setOnClickListener(this);
-		ic_1.setOnClickListener(this);
-		ic_2.setOnClickListener(this);
-		ic_3.setOnClickListener(this);
-		ic_4.setOnClickListener(this);
-		ic_5.setOnClickListener(this);
-		ic_6.setOnClickListener(this);
-		ic_7.setOnClickListener(this);
-		ic_8.setOnClickListener(this);
-		ic_9.setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_0)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_1)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_2)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_3)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_4)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_5)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_6)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_7)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_8)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.ic_9)).setOnClickListener(this);
 
 		// Initialize calendar and time/date/battery views
 		calendar = Calendar.getInstance();
@@ -496,7 +487,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 		// Set text color depending on battery level
 		if (batteryLevel > 15)
-			battery.setTextColor(getResources().getColor(R.color.light_green));
+			battery.setTextColor(getResources().getColor(R.color.white_90));
 
 		else
 			battery.setTextColor(getResources().getColor(R.color.light_red));
@@ -543,102 +534,113 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	}
 
 
+	String hashDa(String s) {
+		if (s.length() > 0) {
+			s = "tapunlock" + s;
+		}
+		s = Long.toString(s.hashCode() & 0x0ffffffffL, 16);
+		while (s.length() < 8) {
+			s = "0" + s;
+		}
+		return s;
+	}
+
+	public void setPIN(String s) {
+		pinEntered = s == null ? "" : s;
+		pinInput.setText(hashDa(pinEntered));
+	}
+
 	// Method called each time the user presses a keypad button
-	public void enterPIN(String c) {
+	public void enterPIN(char c) {
+		if (pinLocked) {
+			return;
+		}
 		pinEntered += c;
-		if (!pinLocked) {
-			pinInput.setText(pinEntered);
+		pinInput.setText(hashDa(pinEntered));
 
-			if (pinEntered.length() == pin.length()) {
-				// If correct PIN entered, reset pinEntered, remove handle callbacks and messages,
-				// Set home launcher activity component disabled and finish
-				if (pinEntered.equals(pin)) {
-					pinEntered = "";
-					pinInput.setText(pinEntered);
+		// If correct PIN entered, reset pinEntered, remove handle callbacks and messages,
+		// Set home launcher activity component disabled and finish
+		if (pinEntered.equals(pin)) {
+			setPIN("");
 
-					mHandler.removeCallbacksAndMessages(null);
+			mHandler.removeCallbacksAndMessages(null);
 
-					packageManager.setComponentEnabledSetting(cnHome, componentDisabled,
-							PackageManager.DONT_KILL_APP);
+			packageManager.setComponentEnabledSetting(cnHome, componentDisabled,
+					PackageManager.DONT_KILL_APP);
 
-					finish();
-					overridePendingTransition(0, 0);
-				}
+			finish();
+			overridePendingTransition(0, 0);
+		}
+		// If incorrect PIN entered, reset drawable and pinEntered, lower pinAttempts
+		// Vibrate and display 'Wrong PIN. Try again' for 1s
+		if (pinEntered.length() > 10) {
+			if (pinAttempts > 0) {
+				pinAttempts -= 1;
 
-				// If incorrect PIN entered, reset drawable and pinEntered, lower pinAttempts
-				// Vibrate and display 'Wrong PIN. Try again' for 1s
-				else {
-					if (pinAttempts > 0) {
-						pinAttempts -= 1;
+				setPIN("");
 
-						pinEntered = "";
-						pinInput.setText(pinEntered);
+				unlockText.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						if (pinAttempts >= 0) {
+							if (nfcAdapter != null) {
+								if (nfcAdapter.isEnabled())
+									unlockText.setText("");
 
-						unlockText.postDelayed(new Runnable() {
-							@Override
-							public void run() {
-								if (pinAttempts >= 0) {
-									if (nfcAdapter != null) {
-										if (nfcAdapter.isEnabled())
-											unlockText.setText("");
-
-										else {
-											unlockText.setText(getResources().getString(
-													R.string.scan_to_unlock_nfc_off));
-										}
-									}
-
-									else {
-										unlockText.setText(getResources().getString(
-												R.string.scan_to_unlock_nfc_off));
-									}
+								else {
+									unlockText.setText(getResources().getString(
+											R.string.scan_to_unlock_nfc_off));
 								}
 							}
-						}, 1000);
 
-						if (vibratorAvailable)
-							vibrator.vibrate(250);
-
-						unlockText.setText(getResources().getString(R.string.wrong_pin));
-					}
-
-					// 0 attempts left, vibrate, reset pinEntered and pinAttempts,
-					// Set pinLocked to true, store and post reset PIN keypad runnable in 30s
-					else {
-						if (vibratorAvailable)
-							vibrator.vibrate(500);
-
-						if (nfcAdapter != null) {
-							if (nfcAdapter.isEnabled())
-								unlockText.setText(getResources().getString(R.string.pin_locked));
-
-							else
-								unlockText.setText(getResources().getString(R.string.pin_locked_nfc_off));
+							else {
+								unlockText.setText(getResources().getString(
+										R.string.scan_to_unlock_nfc_off));
+							}
 						}
-
-						else
-							unlockText.setText(getResources().getString(R.string.pin_locked_nfc_off));
-
-
-						pinEntered = "";
-						pinInput.setText(pinEntered);
-
-						pinLocked = true;
-
-						pinAttempts = 5;
-
-						try {
-							settings.put("pinLocked", true);
-
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-
-						writeToJSON();
-
-						mHandler.postDelayed(pinLockedRunnable, PIN_LOCKED_RUNNABLE_DELAY);
 					}
+				}, 1000);
+
+				if (vibratorAvailable)
+					vibrator.vibrate(250);
+
+				unlockText.setText(getResources().getString(R.string.wrong_pin));
+			}
+
+			// 0 attempts left, vibrate, reset pinEntered and pinAttempts,
+			// Set pinLocked to true, store and post reset PIN keypad runnable in 30s
+			else {
+				if (vibratorAvailable)
+					vibrator.vibrate(500);
+
+				if (nfcAdapter != null) {
+					if (nfcAdapter.isEnabled())
+						unlockText.setText(getResources().getString(R.string.pin_locked));
+
+					else
+						unlockText.setText(getResources().getString(R.string.pin_locked_nfc_off));
 				}
+
+				else
+					unlockText.setText(getResources().getString(R.string.pin_locked_nfc_off));
+
+
+				setPIN("");
+
+				pinLocked = true;
+
+				pinAttempts = 5;
+
+				try {
+					settings.put("pinLocked", true);
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				writeToJSON();
+
+				mHandler.postDelayed(pinLockedRunnable, PIN_LOCKED_RUNNABLE_DELAY);
 			}
 		}
 	}
@@ -648,43 +650,43 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	public void onClick(View v) {
 		// If PIN keypad button pressed, add pressed number to pinEntered and call checkPin method
 		if (v.getId() == R.id.ic_0) {
-			enterPIN("0");
+			enterPIN('0');
 		}
 
 		else if (v.getId() == R.id.ic_1) {
-			enterPIN("1");
+			enterPIN('1');
 		}
 
 		else if (v.getId() == R.id.ic_2) {
-			enterPIN("2");
+			enterPIN('2');
 		}
 
 		else if (v.getId() == R.id.ic_3) {
-			enterPIN("3");
+			enterPIN('3');
 		}
 
 		else if (v.getId() == R.id.ic_4) {
-			enterPIN("4");
+			enterPIN('4');
 		}
 
 		else if (v.getId() == R.id.ic_5) {
-			enterPIN("5");
+			enterPIN('5');
 		}
 
 		else if (v.getId() == R.id.ic_6) {
-			enterPIN("6");
+			enterPIN('6');
 		}
 
 		else if (v.getId() == R.id.ic_7) {
-			enterPIN("7");
+			enterPIN('7');
 		}
 
 		else if (v.getId() == R.id.ic_8) {
-			enterPIN("8");
+			enterPIN('8');
 		}
 
 		else if (v.getId() == R.id.ic_9) {
-			enterPIN("9");
+			enterPIN('9');
 		}
 	}
 
@@ -829,17 +831,18 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 				if (Build.VERSION.SDK_INT < 19) {
 					nfcAdapter.enableForegroundDispatch(this, pIntent,
 							new IntentFilter[]{new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED)},
-							new String[][]{new String[]{"android.nfc.tech.MifareClassic"},
-									new String[]{"android.nfc.tech.MifareUltralight"},
-									new String[]{"android.nfc.tech.NfcA"},
-									new String[]{"android.nfc.tech.NfcB"},
-									new String[]{"android.nfc.tech.NfcF"},
-									new String[]{"android.nfc.tech.NfcV"},
-									new String[]{"android.nfc.tech.Ndef"},
-									new String[]{"android.nfc.tech.IsoDep"},
-									new String[]{"android.nfc.tech.NdefFormatable"}
+							new String[][]{
+								new String[]{"android.nfc.tech.MifareClassic"},
+								new String[]{"android.nfc.tech.MifareUltralight"},
+								new String[]{"android.nfc.tech.NfcA"},
+								new String[]{"android.nfc.tech.NfcB"},
+								new String[]{"android.nfc.tech.NfcF"},
+								new String[]{"android.nfc.tech.NfcV"},
+								new String[]{"android.nfc.tech.Ndef"},
+								new String[]{"android.nfc.tech.IsoDep"},
+								new String[]{"android.nfc.tech.NdefFormatable"},
 							}
-					);
+						);
 				}
 
 				// If Android version 4.4 or bigger, use enableReaderMode method
@@ -928,7 +931,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 				}
 			}
 
-			// If NFC is off
+			// If NFC is disabled
 			else {
 				if (pinLocked)
 					unlockText.setText(getResources().getString(R.string.pin_locked_nfc_off));
@@ -938,7 +941,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			}
 		}
 
-		// If NFC is off
+		// If NFC is absent
 		else {
 			if (pinLocked)
 				unlockText.setText(getResources().getString(R.string.pin_locked_nfc_off));
