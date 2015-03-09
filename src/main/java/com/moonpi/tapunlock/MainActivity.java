@@ -125,10 +125,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
     private Boolean onStart = false; // var for when lockscreen is enabled when app started
 
     // Used for action bar title design
-    private Typeface lobsterTwo;
     private TextView actionBarTitleView;
-
-
 
     // Custom tag adapter class (to populate NFC tags listView)
     private class TagAdapter extends BaseAdapter implements ListAdapter {
@@ -200,15 +197,10 @@ public class MainActivity extends Activity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get lobster_two asset and create typeface
-        // Set action bar title to lobster_two typeface
-        lobsterTwo = Typeface.createFromAsset(getAssets(), "lobster_two.otf");
-
         int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
         actionBarTitleView = (TextView) getWindow().findViewById(actionBarTitle);
 
         if (actionBarTitleView != null) {
-            actionBarTitleView.setTypeface(lobsterTwo);
             actionBarTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f);
             actionBarTitleView.setTextColor(getResources().getColor(R.color.blue));
         }
@@ -757,6 +749,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+		/*
         // If Rate app pressed, ask user if it's ok to leave app and go to Play Store
         // If yes, open app in Play Store; if no, close dialog
         if (item.getItemId() == R.id.rate_app) {
@@ -786,7 +779,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 
             return true;
         }
-
+		*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -1225,7 +1218,6 @@ public class MainActivity extends Activity implements View.OnClickListener,
         super.onResume();
 
         if (actionBarTitleView != null) {
-            actionBarTitleView.setTypeface(lobsterTwo);
             actionBarTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f);
             actionBarTitleView.setTextColor(getResources().getColor(R.color.blue));
         }
