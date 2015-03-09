@@ -69,11 +69,6 @@ import java.util.Locale;
 public class LockActivity extends Activity implements View.OnClickListener, View.OnTouchListener {
 
 
-	// Brightness int flags
-	private static final int LOW_BRIGHTNESS = 0;
-	private static final int MEDIUM_BRIGHTNESS = 80;
-	private static final int HIGH_BRIGHTNESS = 255;
-
 	private static final int SCREEN_TIMEOUT = 15000; // Screen timeout flag
 	private static final int TIMEOUT_DELAY = 3000; // For getting system screen timeout
 
@@ -115,24 +110,20 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 	// Layout items
 	private View disableStatusBar;
-	private TextView time, date, battery, unlockText, pinInput;
+	private TextView time;
+	private TextView date;
+	private TextView battery;
+	private TextView unlockText;
+	private TextView pinInput;
 
 	// Phone and Camera open booleans
 	private Boolean phoneToOpen = false;
 	private Boolean cameraToOpen = false;
 
-	// View animations
-	protected Animation slideUp, slideDown, fadeIn, fadeOut;
-
 	// Max number of times the launcher pick dialog toast should show
 	private int launcherPickToast = 2;
 	private Boolean isPhoneCalling = false; // True if phone state listener is ringing/offhook
 	private Boolean isAlarmRinging = false; // True if alarm is ringing
-
-	// For gesture detection
-	private static final int SWIPE_MIN_DIST = 180;
-	private Boolean swipedUp = false;
-	private Boolean swipedDown = true;
 
 	// Contents of JSON file
 	private JSONObject root;
@@ -211,8 +202,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			}
 
 			// If alarm dismissed or snoozed, move task to front and set 'isAlarmRinging' to false
-			else if (action.equals(ALARM_DISMISS_ACTION) || action.equals(ALARM_DONE_ACTION) ||
-					 action.equals(ALARM_SNOOZE_ACTION)) {
+			else if (action.equals(ALARM_DISMISS_ACTION) || action.equals(ALARM_DONE_ACTION) || action.equals(ALARM_SNOOZE_ACTION)) {
 				if (isAlarmRinging) {
 					activityManager.moveTaskToFront(taskId, 0);
 					isAlarmRinging = false;
@@ -220,7 +210,6 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			}
 		}
 	};
-
 
 
 	@Override
@@ -378,12 +367,6 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		ic_8.setOnClickListener(this);
 		ic_9.setOnClickListener(this);
 
-		// Initialize animations
-		slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
-		slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
-		fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-		fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-
 		// Initialize calendar and time/date/battery views
 		calendar = Calendar.getInstance();
 
@@ -430,8 +413,8 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	// Write content to JSON file
 	public void writeToJSON() {
 		try {
-			BufferedWriter bWrite = new BufferedWriter(new OutputStreamWriter
-					(openFileOutput("settings.json", Context.MODE_PRIVATE)));
+			BufferedWriter bWrite = new BufferedWriter(new OutputStreamWriter(
+				openFileOutput("settings.json", Context.MODE_PRIVATE)));
 			bWrite.write(root.toString());
 			bWrite.close();
 
@@ -561,7 +544,8 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 
 	// Method called each time the user presses a keypad button
-	public void checkPIN() {
+	public void enterPIN(String c) {
+		pinEntered += c;
 		if (!pinLocked) {
 			pinInput.setText(pinEntered);
 
@@ -664,73 +648,43 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	public void onClick(View v) {
 		// If PIN keypad button pressed, add pressed number to pinEntered and call checkPin method
 		if (v.getId() == R.id.ic_0) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "0";
-
-			checkPIN();
+			enterPIN("0");
 		}
 
 		else if (v.getId() == R.id.ic_1) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "1";
-
-			checkPIN();
+			enterPIN("1");
 		}
 
 		else if (v.getId() == R.id.ic_2) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "2";
-
-			checkPIN();
+			enterPIN("2");
 		}
 
 		else if (v.getId() == R.id.ic_3) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "3";
-
-			checkPIN();
+			enterPIN("3");
 		}
 
 		else if (v.getId() == R.id.ic_4) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "4";
-
-			checkPIN();
+			enterPIN("4");
 		}
 
 		else if (v.getId() == R.id.ic_5) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "5";
-
-			checkPIN();
+			enterPIN("5");
 		}
 
 		else if (v.getId() == R.id.ic_6) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "6";
-
-			checkPIN();
+			enterPIN("6");
 		}
 
 		else if (v.getId() == R.id.ic_7) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "7";
-
-			checkPIN();
+			enterPIN("7");
 		}
 
 		else if (v.getId() == R.id.ic_8) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "8";
-
-			checkPIN();
+			enterPIN("8");
 		}
 
 		else if (v.getId() == R.id.ic_9) {
-			if (pinEntered.length() < pin.length())
-				pinEntered += "9";
-
-			checkPIN();
+			enterPIN("9");
 		}
 	}
 
