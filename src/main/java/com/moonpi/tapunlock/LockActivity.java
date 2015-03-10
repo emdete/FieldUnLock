@@ -10,20 +10,12 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.view.GestureDetector;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
-import android.hardware.Camera;
-import android.hardware.Camera.Parameters;
-import android.media.AudioManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
 import android.nfc.Tag;
@@ -40,9 +32,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -58,8 +47,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -164,7 +151,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 			writeToJSON();
 
-			setPIN("");
+			updatePIN(null);
 		}
 	};
 
@@ -344,7 +331,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		battery = (TextView)findViewById(R.id.battery);
 		unlockText = (TextView)findViewById(R.id.unlockText);
 		pinInput = (TextView)findViewById(R.id.pinInput);
-		pinInput.setText(hashDa(pinEntered));
+		updatePIN(null);
 
 		// Set onClick listeners
 		((ImageButton) findViewById(R.id.ic_0)).setOnClickListener(this);
@@ -534,7 +521,8 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	}
 
 
-	String hashDa(String s) {
+	public void updatePIN(String s) {
+		pinEntered = s == null ? "" : s;
 		if (s.length() > 0) {
 			s = "tapunlock" + s;
 		}
@@ -542,12 +530,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		while (s.length() < 8) {
 			s = "0" + s;
 		}
-		return s;
-	}
-
-	public void setPIN(String s) {
-		pinEntered = s == null ? "" : s;
-		pinInput.setText(hashDa(pinEntered));
+		pinInput.setText(pinEntered);
 	}
 
 	// Method called each time the user presses a keypad button
@@ -555,13 +538,12 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		if (pinLocked) {
 			return;
 		}
-		pinEntered += c;
-		pinInput.setText(hashDa(pinEntered));
+		updatePIN(pinEntered + c);
 
 		// If correct PIN entered, reset pinEntered, remove handle callbacks and messages,
 		// Set home launcher activity component disabled and finish
 		if (pinEntered.equals(pin)) {
-			setPIN("");
+			updatePIN(null);
 
 			mHandler.removeCallbacksAndMessages(null);
 
@@ -577,7 +559,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			if (pinAttempts > 0) {
 				pinAttempts -= 1;
 
-				setPIN("");
+				updatePIN(null);
 
 				unlockText.postDelayed(new Runnable() {
 					@Override
@@ -625,7 +607,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 					unlockText.setText(getResources().getString(R.string.pin_locked_nfc_off));
 
 
-				setPIN("");
+				updatePIN(null);
 
 				pinLocked = true;
 
@@ -788,24 +770,20 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 				case TelephonyManager.CALL_STATE_RINGING:
 					isPhoneCalling = true;
 					moveTaskToBack(true);
-
 					break;
 
 				// If state is offhook, set isPhoneCalling var to true and move task to back
 				case TelephonyManager.CALL_STATE_OFFHOOK:
 					isPhoneCalling = true;
 					moveTaskToBack(true);
-
 					break;
 
 				// If call stopped or idle and isPhoneCalling var is true, move task to queue front
 				case TelephonyManager.CALL_STATE_IDLE:
 					if (isPhoneCalling) {
 						activityManager.moveTaskToFront(taskId, 0);
-
 						isPhoneCalling = false;
 					}
-
 					break;
 			}
 		}
