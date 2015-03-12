@@ -3,13 +3,14 @@ from os import listdir, system
 from PIL.Image import frombytes, open as fromfile, eval as image_eval, merge as image_merge
 from PIL.ImageOps import invert, autocontrast, grayscale, equalize, solarize
 
+# see https://developer.android.com/guide/practices/screens_support.html
 SIZES = (
 		(16, 'xxxh', ),
 		(12, 'xxh', ),
-		(8,  'xh', ),
-		(6,  'h', ),
-		(4,  'm', ),
-		(3,  'l', ),
+		(8, 'xh', ),
+		(6, 'h', ),
+		(4, 'm', ),
+		(3, 'l', ),
 	)
 
 def glob(w):
@@ -32,7 +33,6 @@ def conv_png(b, n):
 		d = int(b * d / 4)
 		image = image.resize((d, d, ), )
 		image.save('../src/main/res/drawable-{}dpi/{}.png'.format(t, n))
-		# TODO pressed
 		image.save('../src/main/res/drawable-{}dpi/{}_pressed.png'.format(t, n))
 
 for n in glob('.svg'):
