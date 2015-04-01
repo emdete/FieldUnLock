@@ -35,6 +35,8 @@ Add the following features:
 
 -	Read read-counter and reset pwd on that NFC
 
+-	Shuffle pin entry
+
 License
 -------
 
