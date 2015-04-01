@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Many thanks to Fabio Carpi for providing the translation! -->
-    <string name="app_name">TapUnlock</string>
+    <string name="app_name">FieldUnlock</string>
     <string name="title_activity_lock">NFC Lockscreen</string>
     <!-- -->
     <string name="scan_to_unlock_nfc_off">NFC está desligado. Digite seu PIN</string>

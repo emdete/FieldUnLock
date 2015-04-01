@@ -1,4 +1,4 @@
-package com.moonpi.tapunlock;
+package org.pyneo.fieldunlock;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -8,24 +8,26 @@ import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
-import android.os.Build;
-import android.provider.MediaStore;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.graphics.PixelFormat;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -36,65 +38,52 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Date;
 import java.util.Locale;
+import java.text.SimpleDateFormat;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-
-public class LockActivity extends Activity implements View.OnClickListener, View.OnTouchListener {
-
-
+public class LockActivity extends Activity implements View.OnClickListener, View.OnTouchListener, Util {
 	private static final int SCREEN_TIMEOUT = 15000; // Screen timeout flag
 	private static final int TIMEOUT_DELAY = 3000; // For getting system screen timeout
-
 	private static final int PIN_LOCKED_RUNNABLE_DELAY = 30000; // Unlock PIN keypad after x milliseconds
-
 	// Alarm check flags
 	private static final String ALARM_ALERT_ACTION = "com.android.deskclock.ALARM_ALERT";
 	private static final String ALARM_SNOOZE_ACTION = "com.android.deskclock.ALARM_SNOOZE";
 	private static final String ALARM_DISMISS_ACTION = "com.android.deskclock.ALARM_DISMISS";
 	private static final String ALARM_DONE_ACTION = "com.android.deskclock.ALARM_DONE";
-
 	private PendingIntent pIntent; // Pending intent for NFC Tag discovery
-
 	private int flags; // Window flags
-
 	private WindowManager wm;
 	private ActivityManager activityManager;
 	private PackageManager packageManager;
-
 	// Components for home launcher activity
 	private ComponentName cnHome;
 	private int componentDisabled, componentEnabled;
-
 	private NfcAdapter nfcAdapter;
 	private Vibrator vibrator;
-
 	private Boolean vibratorAvailable = false; // True if device vibrator exists, false otherwise
 	private ContentResolver cResolver; // Content resolver for system settings get and put
 	private int systemScreenTimeout = -1; // For getting default system screen timeout
 	private int ringerMode; // 1 (NORMAL), 2 (VIBRATE) and 3 (SILENT)
-
 	private int taskId;
-
 	private String pinEntered = ""; // The PIN the user inputs
 	private int pinAttempts = 5; // The number of attempts before PIN locked for 30s
-
 	// For updating time and date values
 	private Calendar calendar;
-
 	// Layout items
 	private View disableStatusBar;
 	private TextView time;
@@ -102,16 +91,10 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	private TextView battery;
 	private TextView unlockText;
 	private TextView pinInput;
-
-	// Phone and Camera open booleans
-	private Boolean phoneToOpen = false;
-	private Boolean cameraToOpen = false;
-
 	// Max number of times the launcher pick dialog toast should show
 	private int launcherPickToast = 2;
 	private Boolean isPhoneCalling = false; // True if phone state listener is ringing/offhook
 	private Boolean isAlarmRinging = false; // True if alarm is ringing
-
 	// Contents of JSON file
 	private JSONObject root;
 	private JSONObject settings;
@@ -119,9 +102,12 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	private String pin;
 	private Boolean pinLocked;
 	private int blur;
-
 	private Handler mHandler = new Handler();
-
+	private UnattendedPic unattendedPic = new UnattendedPic() {
+		public void captured(File file) {
+			send(file);
+		}
+	};
 	// Vibrate, set pinLocked to false, store and reset pinEntered
 	protected Runnable pinLockedRunnable = new Runnable() {
 		@Override
@@ -135,9 +121,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 				else
 					unlockText.setText(getResources().getString(R.string.scan_to_unlock_nfc_off));
-			}
-
-			else
+			} else
 				unlockText.setText(getResources().getString(R.string.scan_to_unlock_nfc_off));
 
 			pinLocked = false;
@@ -146,7 +130,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 				settings.put("pinLocked", false);
 
 			} catch (JSONException e) {
-				e.printStackTrace();
+				Log.e(TAG, e.toString(), e);
 			}
 
 			writeToJSON();
@@ -154,8 +138,6 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			updatePIN(null);
 		}
 	};
-
-
 	// Broadcast receiver for time, date and battery changed
 	private BroadcastReceiver mChangeReceiver = new BroadcastReceiver() {
 		@Override
@@ -168,14 +150,10 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			else if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
 				int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
 				updateBattery(level);
-			}
-
-			else if (action.equals(Intent.ACTION_DATE_CHANGED))
+			} else if (action.equals(Intent.ACTION_DATE_CHANGED))
 				updateDate();
 		}
 	};
-
-
 	// Alarm broadcast receiver
 	private BroadcastReceiver mAlarmReceiver = new BroadcastReceiver() {
 		@Override
@@ -197,7 +175,6 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			}
 		}
 	};
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -235,7 +212,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		componentEnabled = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
 		componentDisabled = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 
-		cnHome = new ComponentName(this, "com.moonpi.tapunlock.LockHome");
+		cnHome = new ComponentName(this, "org.pyneo.fieldunlock.LockHome");
 
 		// Enable home launcher activity component
 		packageManager.setComponentEnabledSetting(cnHome, componentEnabled, PackageManager.DONT_KILL_APP);
@@ -326,11 +303,11 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		Settings.System.putInt(cResolver, Settings.System.SCREEN_OFF_TIMEOUT, SCREEN_TIMEOUT);
 
 		// Initialize layout items
-		time = (TextView)findViewById(R.id.time);
-		date = (TextView)findViewById(R.id.date);
-		battery = (TextView)findViewById(R.id.battery);
-		unlockText = (TextView)findViewById(R.id.unlockText);
-		pinInput = (TextView)findViewById(R.id.pinInput);
+		time = (TextView) findViewById(R.id.time);
+		date = (TextView) findViewById(R.id.date);
+		battery = (TextView) findViewById(R.id.battery);
+		unlockText = (TextView) findViewById(R.id.unlockText);
+		pinInput = (TextView) findViewById(R.id.pinInput);
 		updatePIN(null);
 
 		// Set onClick listeners
@@ -387,19 +364,18 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		}
 	}
 
-
 	// Write content to JSON file
 	public void writeToJSON() {
 		try {
 			BufferedWriter bWrite = new BufferedWriter(new OutputStreamWriter(
-				openFileOutput("settings.json", Context.MODE_PRIVATE)));
+					openFileOutput("settings.json", Context.MODE_PRIVATE)));
 			bWrite.write(root.toString());
 			bWrite.close();
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString(), e);
 		}
 	}
 
@@ -411,11 +387,11 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			root = new JSONObject(bRead.readLine());
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString(), e);
 		} catch (JSONException e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString(), e);
 		}
 
 		// Read settings object from root
@@ -423,7 +399,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			settings = root.getJSONObject("settings");
 
 		} catch (JSONException e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString(), e);
 		}
 
 		// Read required items from settings object
@@ -434,7 +410,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			tags = settings.getJSONArray("tags");
 
 		} catch (JSONException e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString(), e);
 		}
 	}
 
@@ -470,7 +446,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	// Method to update battery view
 	public void updateBattery(int batteryLevel) {
 		battery.setText(String.valueOf(batteryLevel) + "% " +
-			getResources().getString(R.string.battery_text));
+				getResources().getString(R.string.battery_text));
 
 		// Set text color depending on battery level
 		if (batteryLevel > 15)
@@ -484,19 +460,14 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	public int getBatteryLevel() {
 		Intent batteryIntent = getApplicationContext().registerReceiver(null,
 				new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-
 		int level = -1;
-
 		try {
 			level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-
-		} catch (NullPointerException npe) {
-			npe.printStackTrace();
+		} catch (NullPointerException e) {
+			Log.e(TAG, e.toString(), e);
 		}
-
 		return level;
 	}
-
 
 	// Method to check whether the package is the default home launcher or not
 	public boolean isMyLauncherDefault() {
@@ -509,7 +480,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		final String myPackageName = getPackageName();
 		List<ComponentName> activities = new ArrayList<ComponentName>();
 
-		packageManager.getPreferredActivities(filters, activities, "com.moonpi.tapunlock");
+		packageManager.getPreferredActivities(filters, activities, "org.pyneo.fieldunlock");
 
 		for (ComponentName activity : activities) {
 			if (myPackageName.equals(activity.getPackageName())) {
@@ -520,17 +491,19 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		return false;
 	}
 
-
 	public void updatePIN(String s) {
-		pinEntered = s == null ? "" : s;
+		if (s == null) {
+			s = "";
+		}
+		pinEntered = s;
 		if (s.length() > 0) {
-			s = "tapunlock" + s;
+			s = "FieldUnlock" + s;
 		}
 		s = Long.toString(s.hashCode() & 0x0ffffffffL, 16);
 		while (s.length() < 8) {
 			s = "0" + s;
 		}
-		pinInput.setText(pinEntered);
+		pinInput.setText(s);
 	}
 
 	// Method called each time the user presses a keypad button
@@ -573,9 +546,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 									unlockText.setText(getResources().getString(
 											R.string.scan_to_unlock_nfc_off));
 								}
-							}
-
-							else {
+							} else {
 								unlockText.setText(getResources().getString(
 										R.string.scan_to_unlock_nfc_off));
 							}
@@ -601,9 +572,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 					else
 						unlockText.setText(getResources().getString(R.string.pin_locked_nfc_off));
-				}
-
-				else
+				} else
 					unlockText.setText(getResources().getString(R.string.pin_locked_nfc_off));
 
 
@@ -615,9 +584,8 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 				try {
 					settings.put("pinLocked", true);
-
 				} catch (JSONException e) {
-					e.printStackTrace();
+					Log.e(TAG, e.toString(), e);
 				}
 
 				writeToJSON();
@@ -627,47 +595,35 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		}
 	}
 
-
 	@Override
 	public void onClick(View v) {
+		// take a pic if clicked
+		try {
+			unattendedPic.capture(this);
+		}
+		catch (Exception e) {
+			Log.e(TAG, e.toString(), e);
+		}
 		// If PIN keypad button pressed, add pressed number to pinEntered and call checkPin method
 		if (v.getId() == R.id.ic_0) {
 			enterPIN('0');
-		}
-
-		else if (v.getId() == R.id.ic_1) {
+		} else if (v.getId() == R.id.ic_1) {
 			enterPIN('1');
-		}
-
-		else if (v.getId() == R.id.ic_2) {
+		} else if (v.getId() == R.id.ic_2) {
 			enterPIN('2');
-		}
-
-		else if (v.getId() == R.id.ic_3) {
+		} else if (v.getId() == R.id.ic_3) {
 			enterPIN('3');
-		}
-
-		else if (v.getId() == R.id.ic_4) {
+		} else if (v.getId() == R.id.ic_4) {
 			enterPIN('4');
-		}
-
-		else if (v.getId() == R.id.ic_5) {
+		} else if (v.getId() == R.id.ic_5) {
 			enterPIN('5');
-		}
-
-		else if (v.getId() == R.id.ic_6) {
+		} else if (v.getId() == R.id.ic_6) {
 			enterPIN('6');
-		}
-
-		else if (v.getId() == R.id.ic_7) {
+		} else if (v.getId() == R.id.ic_7) {
 			enterPIN('7');
-		}
-
-		else if (v.getId() == R.id.ic_8) {
+		} else if (v.getId() == R.id.ic_8) {
 			enterPIN('8');
-		}
-
-		else if (v.getId() == R.id.ic_9) {
+		} else if (v.getId() == R.id.ic_9) {
 			enterPIN('9');
 		}
 	}
@@ -696,7 +652,8 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		return false;
 	}
 
-	public void onShowPress(MotionEvent e) {}
+	public void onShowPress(MotionEvent e) {
+	}
 
 	public boolean onSingleTapUp(MotionEvent e) {
 		return false;
@@ -706,8 +663,8 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		return false;
 	}
 
-	public void onLongPress(MotionEvent e) {}
-
+	public void onLongPress(MotionEvent e) {
+	}
 
 	// If window touched, reset brightness and if touched outside window, move task to queue front
 	@Override
@@ -728,7 +685,6 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		}
 		return true;
 	}
-
 
 	@Override
 	public void onBackPressed() {
@@ -757,7 +713,6 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 		return false;
 	}
-
 
 	// Call state listener
 	class StateListener extends PhoneStateListener {
@@ -789,7 +744,6 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		}
 	}
 
-
 	// If activity resumed, enable NFC tag discovery
 	@Override
 	protected void onResume() {
@@ -810,17 +764,17 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 					nfcAdapter.enableForegroundDispatch(this, pIntent,
 							new IntentFilter[]{new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED)},
 							new String[][]{
-								new String[]{"android.nfc.tech.MifareClassic"},
-								new String[]{"android.nfc.tech.MifareUltralight"},
-								new String[]{"android.nfc.tech.NfcA"},
-								new String[]{"android.nfc.tech.NfcB"},
-								new String[]{"android.nfc.tech.NfcF"},
-								new String[]{"android.nfc.tech.NfcV"},
-								new String[]{"android.nfc.tech.Ndef"},
-								new String[]{"android.nfc.tech.IsoDep"},
-								new String[]{"android.nfc.tech.NdefFormatable"},
+									new String[]{"android.nfc.tech.MifareClassic"},
+									new String[]{"android.nfc.tech.MifareUltralight"},
+									new String[]{"android.nfc.tech.NfcA"},
+									new String[]{"android.nfc.tech.NfcB"},
+									new String[]{"android.nfc.tech.NfcF"},
+									new String[]{"android.nfc.tech.NfcV"},
+									new String[]{"android.nfc.tech.Ndef"},
+									new String[]{"android.nfc.tech.IsoDep"},
+									new String[]{"android.nfc.tech.NdefFormatable"},
 							}
-						);
+					);
 				}
 
 				// If Android version 4.4 or bigger, use enableReaderMode method
@@ -861,7 +815,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 										}
 
 									} catch (JSONException e) {
-										e.printStackTrace();
+										Log.e(TAG, e.toString(), e);
 									}
 								}
 
@@ -877,9 +831,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 													unlockText.setText("");
 												}
 											});
-										}
-
-										else {
+										} else {
 											runOnUiThread(new Runnable() {
 												@Override
 												public void run() {
@@ -949,7 +901,6 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		}
 	}
 
-
 	// If activity offline or paused, disable NFC tag discovery and clear flag that kept screen on
 	@Override
 	protected void onPause() {
@@ -958,14 +909,12 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		if (Build.VERSION.SDK_INT < 19) {
 			if (nfcAdapter != null)
 				nfcAdapter.disableForegroundDispatch(this);
-		}
-
-		else if (Build.VERSION.SDK_INT >= 19) {
+		} else if (Build.VERSION.SDK_INT >= 19) {
 			if (nfcAdapter != null)
 				nfcAdapter.disableReaderMode(this);
 		}
+		unattendedPic.stop();
 	}
-
 
 	// If activity finished and stopped, disable home launcher activity component,
 	// Remove disableStatusBar view, clear window flags, unregister receiver, release the camera,
@@ -984,7 +933,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 				wm.removeView(disableStatusBar);
 
 			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
+				Log.e(TAG, e.toString(), e);
 			}
 		}
 
@@ -995,7 +944,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			unregisterReceiver(mAlarmReceiver);
 
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString(), e);
 		}
 
 		if (Build.VERSION.SDK_INT >= 19) {
@@ -1008,7 +957,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			settings.put("pinLocked", false);
 
 		} catch (JSONException e) {
-			e.printStackTrace();
+			Log.e(TAG, e.toString(), e);
 		}
 
 		writeToJSON();
@@ -1019,46 +968,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 		// Remove all handler callbacks
 		mHandler.removeCallbacksAndMessages(null);
-
-		// If Phone button pressed, start default Phone app after 300ms delay
-		if (phoneToOpen) {
-			phoneToOpen = false;
-
-			final Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
-
-			new Handler().postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						startActivity(phoneIntent);
-
-					} catch (ActivityNotFoundException anfe) {
-						anfe.printStackTrace();
-					}
-				}
-			}, 300);
-		}
-
-		// If Camera button pressed, start default Camera app after 300ms delay
-		if (cameraToOpen) {
-			cameraToOpen = false;
-
-			final Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-			new Handler().postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						startActivity(cameraIntent);
-
-					} catch (ActivityNotFoundException anfe) {
-						anfe.printStackTrace();
-					}
-				}
-			}, 300);
-		}
 	}
-
 
 	// Tag discovery for Android versions lower than 4.4
 	// If correct NFC tag detected, unlock device
@@ -1102,7 +1012,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 						}
 
 					} catch (JSONException e) {
-						e.printStackTrace();
+						Log.e(TAG, e.toString(), e);
 					}
 				}
 
@@ -1127,20 +1037,21 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 		}
 	}
 
-
 	// Char array for bytes to hex string method
 	final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
 	// Bytes to hex string method
 	public static String bytesToHex(byte[] bytes) {
 		char[] hexChars = new char[bytes.length * 2];
-
 		for (int i = 0; i < bytes.length; i++) {
 			int x = bytes[i] & 0xFF;
 			hexChars[i * 2] = hexArray[x >>> 4];
-			hexChars[i * 2+1] = hexArray[x & 0x0F];
+			hexChars[i * 2 + 1] = hexArray[x & 0x0F];
 		}
-
 		return new String(hexChars);
+	}
+
+	void send(File f) {
+		Log.i(TAG, "send f=" + f);
 	}
 }

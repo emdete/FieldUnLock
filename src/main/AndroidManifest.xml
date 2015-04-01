@@ -1,120 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.moonpi.tapunlock"
-    android:versionCode="13"
-    android:versionName="2.1.0 beta" >
-
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="21" />
-
-    <supports-screens
-        android:xlargeScreens="false" />
-        
-    <!--
-    android.permission.ACCESS_NETWORK_STATE - For checking if mobile data is on or off (used in mobile data toolbox button)
-    android.permission.ACCESS_WIFI_STATE - For checking if wifi is on or off (used in wifi toolbox button)
-    android.permission.CAMERA - For turning on/off the LED flash (used in flashlight toolbox button)
-    android.permission.CHANGE_NETWORK_STATE - For turning on/off mobile data (used in mobile data toolbox button)
-    android.permission.CHANGE_WIFI_STATE - For turning on/off wifi (used in wifi toolbox button)
-    android.permission.DISABLE_KEYGUARD - For disabling stock Android lockscreen if it's 'Swipe'
-    android.permission.INTERNET - Used to communicate with Google servers when donation in-app purchases are started/finished
-    android.permission.MODIFY_AUDIO_SETTINGS - For changing the audio mode (used in sound toolbox button)
-    android.permission.NFC - Self-explanatory
-    android.permission.READ_EXTERNAL_STORAGE - For reading the blurred wallpaper stored on external storage
-    android.permission.READ_PHONE_STATE - For checking if phone is ringing or not (so the lockscreen knows when to go to background)
-    android.permission.RECEIVE_BOOT_COMPLETED - For starting the lockscreen when device has booted
-    android.permission.REORDER_TASKS - To disable the recent tasks button (if detected, send lockscreen to front)
-    android.permission.SYSTEM_ALERT_WINDOW - To disable status bar
-    android.permission.VIBRATE - Self-explanatory
-    android.permission.WRITE_EXTERNAL_STORAGE - For writing the blurred wallpaper to external storage
-    android.permission.WRITE_SETTINGS - For modifying screen-timeout values
-    com.android.vending.BILLING - Used in in-app-billing for donations used in main app
-    -->
-
-    <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <!-- uses-permission android:name="android.permission.INTERNET" / -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.REORDER_TASKS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- <uses-permission android:name="com.android.vending.BILLING" /> - Used in main app -->
-
-    <uses-feature
-        android:name="android.hardware.nfc"
-        android:required="true" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-
-
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".LockActivity"
-            android:excludeFromRecents="true"
-            android:label="@string/title_activity_lock"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar" >
-        </activity>
-
-        <activity-alias
-            android:name=".LockHome"
-            android:label="@string/title_activity_lock"
-            android:enabled="false"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
-            android:targetActivity=".LockActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity-alias>
-
-        <service android:name=".ScreenLockService" >
-        </service>
-
-        <receiver
-            android:name=".ScreenLockReceiver"
-            android:enabled="true" >
-            <intent-filter android:priority="999" >
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-    </application>
-
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	package="org.pyneo.fieldunlock"
+	>
+	<supports-screens android:xlargeScreens="false" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- For checking if mobile data is on or off (used in mobile data toolbox button) -->
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- For checking if wifi is on or off (used in wifi toolbox button) -->
+	<uses-permission android:name="android.permission.CAMERA" /> <!-- For turning on/off the LED flash (used in flashlight toolbox button) -->
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- For turning on/off mobile data (used in mobile data toolbox button) -->
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- For turning on/off wifi (used in wifi toolbox button) -->
+	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> <!-- For disabling stock Android lockscreen if it's 'Swipe' -->
+	<uses-permission android:name="android.permission.INTERNET" /> <!-- Used to communicate with Google servers when donation in-app purchases are started/finished -->
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> <!-- For changing the audio mode (used in sound toolbox button) -->
+	<uses-permission android:name="android.permission.NFC" /> <!-- Self-explanatory -->
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- For reading the blurred wallpaper stored on external storage -->
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- For checking if phone is ringing or not (so the lockscreen knows when to go to background) -->
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- For starting the lockscreen when device has booted -->
+	<uses-permission android:name="android.permission.REORDER_TASKS" /> <!-- To disable the recent tasks button (if detected, send lockscreen to front) -->
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- To disable status bar -->
+	<uses-permission android:name="android.permission.VIBRATE" /> <!-- Self-explanatory -->
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- For writing the blurred wallpaper to external storage -->
+	<uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- For modifying screen-timeout values -->
+	<uses-feature android:name="android.hardware.nfc" android:required="true" />
+	<uses-feature android:name="android.hardware.camera" android:required="false" />
+	<uses-feature android:name="android.hardware.telephony" android:required="false" />
+	<application
+		android:allowBackup="true"
+		android:icon="@drawable/ic_launcher"
+		android:label="@string/app_name"
+		android:theme="@style/AppTheme" >
+		<activity
+			android:name=".MainActivity"
+			android:label="@string/app_name"
+			android:launchMode="singleTask"
+			android:screenOrientation="portrait" >
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".LockActivity"
+			android:excludeFromRecents="true"
+			android:label="@string/title_activity_lock"
+			android:launchMode="singleInstance"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.Holo.NoActionBar" >
+		</activity>
+		<activity-alias
+			android:name=".LockHome"
+			android:label="@string/title_activity_lock"
+			android:enabled="false"
+			android:excludeFromRecents="true"
+			android:launchMode="singleInstance"
+			android:targetActivity=".LockActivity" >
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.HOME" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity-alias>
+		<service android:name=".ScreenLockService" />
+		<receiver
+			android:name=".ScreenLockReceiver"
+			android:enabled="true" >
+			<intent-filter android:priority="999" >
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
+	</application>
 </manifest>
