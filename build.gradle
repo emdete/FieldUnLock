@@ -1,24 +1,22 @@
 buildscript {
 	repositories {
-		mavenCentral()
+		jcenter()
 	}
 	dependencies {
 		classpath 'com.android.tools.build:gradle:1.1.0'
 	}
 }
 
-apply plugin: 'android'
-
-apply from: "../pyneo.org.gradle"
-android {
-	signingConfigs {
-		release {
-			storeFile file("../pyneo.org.keystore")
-		}
+allprojects {
+	repositories {
+		jcenter()
 	}
 }
 
+apply plugin: 'android'
+
 dependencies {
+	compile 'com.github.anrwatchdog:anrwatchdog:1.1.+'
 }
 
 android {
@@ -26,8 +24,8 @@ android {
 	buildToolsVersion "21.1.2"
 	defaultConfig {
 		minSdkVersion 16
-		targetSdkVersion 21
-		versionCode 14
+		targetSdkVersion 22
+		versionCode 100000
 		versionName "1.0.0"
 	}
 	android {

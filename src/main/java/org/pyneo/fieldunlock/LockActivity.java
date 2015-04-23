@@ -179,6 +179,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		new com.github.anrwatchdog.ANRWatchDog(3000 /*timeout*/).start();
 
 		// Get screen density and calculate disableStatusBar view height
 		float screenDensity = getResources().getDisplayMetrics().density;
@@ -1053,5 +1054,6 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 	void send(File f) {
 		Log.i(TAG, "send f=" + f);
+		Intent intent = new Intent();
 	}
 }
