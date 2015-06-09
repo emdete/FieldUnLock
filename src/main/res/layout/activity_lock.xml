@@ -1,63 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/lockRelativeLayout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:id="@+id/lockRelativeLayout"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="@color/black_25"
+	android:background="@color/black"
+	android:orientation="vertical"
 	>
-	<TextView
-		android:id="@+id/time"
+	<GridLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="@string/time_text_no_time"
-		android:textColor="@color/white"
-		android:textSize="44sp"
-		/>
-	<TextView
-		android:id="@+id/date"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:text="@string/date_text_no_date"
-		android:textColor="@color/white"
-		/>
-	<TextView
-		android:id="@+id/battery"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:text="@string/battery_text_no_battery"
-		android:textColor="@color/white_90"
-		/>
+		android:layout_gravity="center"
+		android:columnCount="2"
+		android:padding="24dp"
+		>
+		<TextView
+			android:id="@+id/time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/time_text_no_time"
+			android:textColor="@color/white"
+			android:textSize="44sp"
+			android:layout_rowSpan="2"
+			android:padding="4dp"
+			/>
+		<TextView
+			android:id="@+id/date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="@string/date_text_no_date"
+			android:textColor="@color/white"
+			android:padding="4dp"
+			/>
+		<TextView
+			android:id="@+id/battery"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="@string/battery_text_no_battery"
+			android:textColor="@color/white_90"
+			android:padding="4dp"
+			/>
+	</GridLayout>
 	<TextView
 		android:id="@+id/unlockText"
-		android:layout_width="wrap_content"
+		android:gravity="center"
 		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:text="Wrong PIN"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:textColor="@color/white_90"
 		/>
 	<TextView
 		android:id="@+id/pinInput"
-		android:layout_width="wrap_content"
+		android:gravity="center"
 		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:maxLength="32"
+		android:text="68b329da9893e34099c7d8ad5cb9c940"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:textColor="@color/white_90"
-		android:gravity="center"
-		android:maxLength="8"
-		android:numeric="integer"
 		/>
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
 		android:orientation="vertical"
+		android:padding="30dp"
 		>
 		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
+			android:layout_height="0sp"
 			android:orientation="horizontal"
+			android:layout_weight="1"
 			>
 			<ImageButton
 				android:id="@+id/ic_0"
@@ -82,9 +97,9 @@
 		</LinearLayout>
 		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
+			android:layout_height="0sp"
 			android:orientation="horizontal"
+			android:layout_weight="1"
 			>
 			<ImageButton
 				android:id="@+id/ic_4"
@@ -109,9 +124,9 @@
 		</LinearLayout>
 		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
+			android:layout_height="0sp"
 			android:orientation="horizontal"
+			android:layout_weight="1"
 			>
 			<ImageButton
 				android:id="@+id/ic_8"
@@ -136,9 +151,9 @@
 		</LinearLayout>
 		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
+			android:layout_height="0sp"
 			android:orientation="horizontal"
+			android:layout_weight="1"
 			>
 			<ImageButton
 				android:id="@+id/ic_c"
@@ -162,4 +177,4 @@
 				/>
 		</LinearLayout>
 	</LinearLayout>
-</RelativeLayout>
+</LinearLayout>

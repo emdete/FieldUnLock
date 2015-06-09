@@ -1,20 +1,17 @@
 <resources>
-
 	<style name="AppTheme" parent="android:Theme.Holo.Light">
 		<item name="android:actionOverflowButtonStyle">@style/ActionBarOverflow</item>
 	</style>
-
 	<style name="ActionBarOverflow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
 		<item name="android:src">@drawable/ic_overflow</item>
 	</style>
-
 	<style name="pinbutton">
 		<item name="android:background">@null</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_weight">1</item>
-		<item name="android:layout_width">wrap_content</item>
+		<item name="android:padding">4dp</item>
+		<item name="android:layout_width">match_parent</item>
 		<item name="android:scaleType">centerInside</item>
 		<item name="android:visibility">visible</item>
 	</style>
-
 </resources>
