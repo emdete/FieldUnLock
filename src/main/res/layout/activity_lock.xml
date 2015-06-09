@@ -5,14 +5,8 @@
 	android:id="@+id/lockRelativeLayout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@color/black"
 	android:orientation="vertical"
 	>
-	<SurfaceView
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:id="@+id/surfaceView"
-		android:background="@color/transparent_white" />
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
