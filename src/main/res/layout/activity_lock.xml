@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/lockRelativeLayout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="@color/black"
 	android:orientation="vertical"
 	>
-	<GridLayout
-		android:layout_width="wrap_content"
+	<SurfaceView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/surfaceView"
+		android:background="@color/transparent_white" />
+	<RelativeLayout
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:columnCount="2"
 		android:padding="24dp"
 		>
+		<Space
+			android:id="@+id/ruler"
+			android:layout_width="8sp"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			/>
 		<TextView
 			android:id="@+id/time"
 			android:layout_width="wrap_content"
@@ -21,8 +32,7 @@
 			android:text="@string/time_text_no_time"
 			android:textColor="@color/white"
 			android:textSize="44sp"
-			android:layout_rowSpan="2"
-			android:padding="4dp"
+			android:layout_toLeftOf="@id/ruler"
 			/>
 		<TextView
 			android:id="@+id/date"
@@ -30,8 +40,10 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="@string/date_text_no_date"
+			android:layout_toRightOf="@id/ruler"
+			android:layout_alignTop="@id/time"
 			android:textColor="@color/white"
-			android:padding="4dp"
+			tools:text="abv"
 			/>
 		<TextView
 			android:id="@+id/battery"
@@ -39,10 +51,11 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="@string/battery_text_no_battery"
+			android:layout_toRightOf="@id/ruler"
+			android:layout_alignBottom="@id/time"
 			android:textColor="@color/white_90"
-			android:padding="4dp"
 			/>
-	</GridLayout>
+	</RelativeLayout>
 	<TextView
 		android:id="@+id/unlockText"
 		android:gravity="center"

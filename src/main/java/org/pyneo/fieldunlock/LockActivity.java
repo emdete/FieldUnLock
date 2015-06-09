@@ -35,7 +35,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
@@ -287,7 +286,7 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 			}
 		}
 
-		RelativeLayout lockRelativeLayout = (RelativeLayout) findViewById(R.id.lockRelativeLayout);
+		View lockRelativeLayout = (View) findViewById(R.id.lockRelativeLayout);
 
 		// If Android version 4.4 or bigger, set layout fits system windows to true
 		if (Build.VERSION.SDK_INT >= 19) {
