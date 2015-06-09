@@ -1,214 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/lockRelativeLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/black_25">
-
-    <SurfaceView
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:id="@+id/surfaceView"
-        android:background="@color/transparent_white" />
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="60dp"
-        android:background="@color/transparent_white"
-        android:id="@+id/separator"
-        android:layout_marginTop="15dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time_text_no_time"
-        android:id="@+id/time"
-        android:textColor="@color/white"
-        android:textSize="44sp"
-        android:layout_toStartOf="@+id/separator"
-        android:layout_toLeftOf="@+id/separator"
-        android:layout_alignTop="@+id/separator"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignBottom="@+id/separator"
-        android:gravity="center" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/date_text_no_date"
-        android:id="@+id/date"
-        android:textColor="@color/white"
-        android:layout_toEndOf="@+id/separator"
-        android:layout_toRightOf="@+id/separator"
-        android:layout_alignTop="@+id/separator"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/battery_text_no_battery"
-        android:id="@+id/battery"
-        android:textColor="@color/white_90"
-        android:layout_below="@+id/date"
-        android:layout_marginTop="5dp"
-        android:layout_alignStart="@+id/date"
-        android:layout_alignLeft="@+id/date" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/unlockText"
-        android:textColor="@color/white_90"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/separator"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/pinInput"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/white_90"
-        android:gravity="center"
-        android:maxLength="8"
-        android:numeric="integer"
-        android:layout_above="@+id/ic_2"
-        android:layout_marginBottom="10dp" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_1"
-        android:contentDescription="@string/one_button_content"
-        android:layout_toStartOf="@+id/ic_2"
-        android:layout_toLeftOf="@+id/ic_2"
-        android:src="@drawable/ic_1"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_alignTop="@+id/ic_2"
-        android:background="@drawable/ic_1_selector"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_2"
-        android:contentDescription="@string/two_button_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_2"
-        android:layout_above="@+id/ic_5"
-        android:layout_marginBottom="18dp"
-        android:background="@drawable/ic_2_selector"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_3"
-        android:contentDescription="@string/three_button_content"
-        android:layout_toEndOf="@+id/ic_2"
-        android:layout_toRightOf="@+id/ic_2"
-        android:src="@drawable/ic_3"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_alignTop="@+id/ic_2"
-        android:background="@drawable/ic_3_selector"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_4"
-        android:contentDescription="@string/four_button_content"
-        android:layout_below="@+id/ic_1"
-        android:layout_alignEnd="@+id/ic_1"
-        android:layout_alignRight="@+id/ic_1"
-        android:src="@drawable/ic_4"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/ic_4_selector"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_6"
-        android:contentDescription="@string/six_button_content"
-        android:layout_below="@+id/ic_3"
-        android:layout_alignStart="@+id/ic_3"
-        android:layout_alignLeft="@+id/ic_3"
-        android:src="@drawable/ic_6"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/ic_6_selector"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_5"
-        android:contentDescription="@string/five_button_content"
-        android:src="@drawable/ic_5"
-        android:layout_centerInParent="true"
-        android:background="@drawable/ic_5_selector"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_7"
-        android:contentDescription="@string/seven_button_content"
-        android:layout_below="@+id/ic_4"
-        android:layout_alignEnd="@+id/ic_4"
-        android:layout_alignRight="@+id/ic_4"
-        android:src="@drawable/ic_7"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/ic_7_selector"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_8"
-        android:contentDescription="@string/eight_button_content"
-        android:layout_below="@+id/ic_5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/ic_8"
-        android:background="@drawable/ic_8_selector"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_9"
-        android:contentDescription="@string/nine_button_content"
-        android:layout_below="@+id/ic_6"
-        android:layout_alignStart="@+id/ic_6"
-        android:layout_alignLeft="@+id/ic_6"
-        android:layout_marginTop="18dp"
-        android:src="@drawable/ic_9"
-        android:background="@drawable/ic_9_selector"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/ic_0"
-        android:contentDescription="@string/zero_button_content"
-        android:layout_below="@+id/ic_8"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_0"
-        android:background="@drawable/ic_0_selector"
-        android:layout_centerHorizontal="true"
-        android:scaleType="fitXY" />
-
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:id="@+id/lockRelativeLayout"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="@color/black_25"
+	>
+	<TextView
+		android:id="@+id/time"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/time_text_no_time"
+		android:textColor="@color/white"
+		android:textSize="44sp"
+		/>
+	<TextView
+		android:id="@+id/date"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:text="@string/date_text_no_date"
+		android:textColor="@color/white"
+		/>
+	<TextView
+		android:id="@+id/battery"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:text="@string/battery_text_no_battery"
+		android:textColor="@color/white_90"
+		/>
+	<TextView
+		android:id="@+id/unlockText"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="@color/white_90"
+		/>
+	<TextView
+		android:id="@+id/pinInput"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="@color/white_90"
+		android:gravity="center"
+		android:maxLength="8"
+		android:numeric="integer"
+		/>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:orientation="vertical"
+		>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:orientation="horizontal"
+			>
+			<ImageButton
+				android:id="@+id/ic_0"
+				android:src="@drawable/ic_0"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_1"
+				android:src="@drawable/ic_1"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_2"
+				android:src="@drawable/ic_2"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_3"
+				android:src="@drawable/ic_3"
+				style="@style/pinbutton"
+				/>
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:orientation="horizontal"
+			>
+			<ImageButton
+				android:id="@+id/ic_4"
+				android:src="@drawable/ic_4"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_6"
+				android:src="@drawable/ic_6"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_5"
+				android:src="@drawable/ic_5"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_7"
+				android:src="@drawable/ic_7"
+				style="@style/pinbutton"
+				/>
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:orientation="horizontal"
+			>
+			<ImageButton
+				android:id="@+id/ic_8"
+				android:src="@drawable/ic_8"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_9"
+				android:src="@drawable/ic_9"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_a"
+				android:src="@drawable/ic_a"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_b"
+				android:src="@drawable/ic_b"
+				style="@style/pinbutton"
+				/>
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:orientation="horizontal"
+			>
+			<ImageButton
+				android:id="@+id/ic_c"
+				android:src="@drawable/ic_c"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_d"
+				android:src="@drawable/ic_d"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_e"
+				android:src="@drawable/ic_e"
+				style="@style/pinbutton"
+				/>
+			<ImageButton
+				android:id="@+id/ic_f"
+				android:src="@drawable/ic_f"
+				style="@style/pinbutton"
+				/>
+		</LinearLayout>
+	</LinearLayout>
 </RelativeLayout>

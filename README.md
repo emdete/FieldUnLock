@@ -18,7 +18,9 @@ Roadmap
 
 Add the following features:
 
--	Take picture with frontcam if wrong password was entered
+-	add ANR watchdog https://github.com/SalomonBrys/ANR-WatchDog
+
+-	Take picture with frontcam on pin entry
 
 -	Save a password on the NFC chip
 
