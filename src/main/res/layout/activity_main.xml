@@ -1,44 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/scrollView"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	>
-
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:animateLayoutChanges="true"
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		android:paddingBottom="10dp"
+		android:paddingBottom="10sp"
 		>
-
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="80dp"
+			android:layout_height="80sp"
 			android:id="@+id/frame1"
-			android:layout_marginLeft="10dp"
-			android:layout_marginTop="10dp"
-			android:layout_marginRight="10dp"
+			android:layout_marginLeft="10sp"
+			android:layout_marginTop="10sp"
+			android:layout_marginRight="10sp"
 			android:layout_alignParentStart="true"
-			android:layout_alignParentLeft="true"
 			android:layout_alignParentEnd="true"
-			android:layout_alignParentRight="true"
 			android:layout_alignParentTop="true"
 			/>
-
-		<View
-			android:layout_width="wrap_content"
-			android:layout_height="2dp"
-			android:id="@+id/shadow1"
-			android:layout_below="@+id/frame1"
-			android:layout_alignStart="@+id/frame1"
-			android:layout_alignLeft="@+id/frame1"
-			android:layout_alignEnd="@+id/frame1"
-			android:layout_alignRight="@+id/frame1"
-			/>
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -48,81 +31,55 @@
 			android:textStyle="bold"
 			android:layout_alignBottom="@+id/pinEdit"
 			android:layout_toStartOf="@+id/pinEdit"
-			android:layout_toLeftOf="@+id/pinEdit"
 			/>
-
 		<EditText
-			android:layout_width="150dp"
+			android:layout_width="150sp"
 			android:layout_height="wrap_content"
 			android:inputType="numberPassword"
 			android:ems="10"
 			android:id="@+id/pinEdit"
-			android:numeric="integer"
-			android:maxLength="6"
+			android:maxLength="64"
 			android:hint="@string/enter_pin_hint"
-			android:layout_marginTop="20dp"
+			android:layout_marginTop="20sp"
 			android:layout_alignTop="@+id/frame1"
 			android:layout_centerHorizontal="true"
-			android:layout_marginStart="5dp"
-			android:layout_marginLeft="5dp"
-			android:layout_marginEnd="10dp"
-			android:layout_marginRight="10dp"
+			android:layout_marginStart="5sp"
+			android:layout_marginEnd="10sp"
 			android:layout_alignBottom="@+id/frame1"
-			android:layout_marginBottom="20dp"
+			android:layout_marginBottom="20sp"
 			android:gravity="center"
 			/>
-
 		<Button
-			style="?android:attr/buttonStyleSmall"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/ok_button"
 			android:id="@+id/setPin"
 			android:layout_toEndOf="@+id/pinEdit"
-			android:layout_toRightOf="@+id/pinEdit"
 			android:layout_alignTop="@+id/frame1"
-			android:layout_marginTop="16dp"
+			android:layout_marginTop="16sp"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_alignBottom="@+id/frame1"
-			android:layout_marginBottom="16dp"
+			android:layout_marginBottom="16sp"
 			/>
-
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="110dp"
+			android:layout_height="110sp"
 			android:id="@+id/frame2"
 			android:layout_below="@+id/frame1"
-			android:layout_marginLeft="10dp"
-			android:layout_marginRight="10dp"
-			android:layout_marginTop="20dp"
+			android:layout_marginLeft="10sp"
+			android:layout_marginRight="10sp"
+			android:layout_marginTop="20sp"
 			android:layout_alignParentStart="true"
-			android:layout_alignParentLeft="true"
 			android:layout_alignParentEnd="true"
-			android:layout_alignParentRight="true"
 			/>
-
-		<View
-			android:layout_width="wrap_content"
-			android:layout_height="2dp"
-			android:id="@+id/shadow2"
-			android:layout_below="@+id/frame2"
-			android:layout_alignStart="@+id/frame2"
-			android:layout_alignLeft="@+id/frame2"
-			android:layout_alignEnd="@+id/frame2"
-			android:layout_alignRight="@+id/frame2"
-			/>
-
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="40dp"
+			android:layout_height="40sp"
 			android:id="@+id/lockScreenSeparator"
 			android:layout_alignStart="@+id/frame2"
-			android:layout_alignLeft="@+id/frame2"
 			android:layout_alignEnd="@+id/frame2"
-			android:layout_alignRight="@+id/frame2"
 			android:layout_alignTop="@+id/frame2"
 			/>
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -130,11 +87,10 @@
 			android:text="@string/nfc_lockscreen"
 			android:id="@+id/lockScreenTitle"
 			android:textStyle="bold"
-			android:layout_marginTop="5dp"
+			android:layout_marginTop="5sp"
 			android:layout_alignTop="@+id/frame2"
 			android:layout_centerHorizontal="true"
 			/>
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -143,12 +99,9 @@
 			android:id="@+id/lockscreen_enabled_disabled"
 			android:layout_below="@+id/lockScreenSeparator"
 			android:layout_alignStart="@+id/frame2"
-			android:layout_alignLeft="@+id/frame2"
-			android:layout_marginStart="8dp"
-			android:layout_marginLeft="45dp"
-			android:layout_marginTop="10dp"
+			android:layout_marginStart="8sp"
+			android:layout_marginTop="10sp"
 			/>
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -157,59 +110,37 @@
 			android:id="@+id/enabled_disabled"
 			android:layout_toEndOf="@+id/lockscreen_enabled_disabled"
 			android:layout_below="@+id/lockscreen_enabled_disabled"
-			android:layout_alignLeft="@+id/lockscreen_enabled_disabled"
 			android:layout_alignStart="@+id/frame2"
-			android:layout_marginTop="8dp"
+			android:layout_marginTop="8sp"
 			/>
-
 		<Switch
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/toggle"
 			android:layout_below="@+id/lockScreenSeparator"
 			android:layout_alignEnd="@+id/frame2"
-			android:layout_alignRight="@+id/frame2"
-			android:layout_marginTop="20dp"
-			android:layout_marginEnd="10dp"
-			android:layout_marginRight="12dp"
+			android:layout_marginTop="20sp"
+			android:layout_marginEnd="10sp"
 			/>
-
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="125dp"
+			android:layout_height="125sp"
 			android:id="@+id/frame3"
 			android:layout_below="@+id/frame2"
-			android:layout_marginLeft="10dp"
-			android:layout_marginRight="10dp"
-			android:layout_marginTop="20dp"
+			android:layout_marginLeft="10sp"
+			android:layout_marginRight="10sp"
+			android:layout_marginTop="20sp"
 			android:layout_alignParentStart="true"
-			android:layout_alignParentLeft="true"
 			android:layout_alignParentEnd="true"
-			android:layout_alignParentRight="true"
 			/>
-
-		<View
-			android:layout_width="wrap_content"
-			android:layout_height="2dp"
-			android:id="@+id/shadow3"
-			android:layout_below="@+id/frame3"
-			android:layout_alignStart="@+id/frame3"
-			android:layout_alignLeft="@+id/frame3"
-			android:layout_alignEnd="@+id/frame3"
-			android:layout_alignRight="@+id/frame3"
-			/>
-
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="40dp"
+			android:layout_height="40sp"
 			android:id="@+id/backgroundBlurSeparator"
 			android:layout_alignStart="@+id/frame3"
-			android:layout_alignLeft="@+id/frame3"
 			android:layout_alignEnd="@+id/frame3"
-			android:layout_alignRight="@+id/frame3"
 			android:layout_alignTop="@+id/frame3"
 			/>
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -217,11 +148,10 @@
 			android:text="@string/background_blur_title"
 			android:id="@+id/backgroundBlurTitle"
 			android:layout_alignTop="@+id/frame3"
-			android:layout_marginTop="8dp"
+			android:layout_marginTop="8sp"
 			android:textStyle="bold"
 			android:layout_centerHorizontal="true"
 			/>
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -229,95 +159,72 @@
 			android:text="@string/background_blur_message"
 			android:id="@+id/backgroundBlurMessage"
 			android:layout_below="@+id/backgroundBlurSeparator"
-			android:layout_alignLeft="@+id/pinTitle"
 			android:layout_alignStart="@+id/pinTitle"
-			android:layout_marginTop="13dp"
-			android:layout_marginStart="13dp"
-			android:layout_marginLeft="16dp"
+			android:layout_marginTop="13sp"
+			android:layout_marginStart="13sp"
 			/>
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:text="15"
+			tools:text="15"
 			android:id="@+id/backgroundBlurValue"
 			android:layout_alignTop="@+id/backgroundBlurMessage"
 			android:layout_toEndOf="@+id/backgroundBlurMessage"
-			android:layout_toRightOf="@+id/backgroundBlurMessage"
-			android:layout_marginStart="5dp"
-			android:layout_marginLeft="5dp"
+			android:layout_marginStart="5sp"
 			/>
-
 		<SeekBar
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/seekBar"
 			android:layout_alignStart="@+id/frame3"
-			android:layout_alignLeft="@+id/frame3"
-			android:layout_marginLeft="5dp"
-			android:layout_marginTop="10dp"
+			android:layout_marginLeft="5sp"
+			android:layout_marginTop="10sp"
 			android:max="25"
 			android:progress="15"
 			android:layout_below="@+id/backgroundBlurMessage"
 			android:layout_toStartOf="@+id/refreshWallpaper"
-			android:layout_toLeftOf="@+id/refreshWallpaper"
-			android:layout_marginRight="5dp"
+			android:layout_marginRight="5sp"
 			/>
-
 		<Button
-			style="?android:attr/buttonStyleSmall"
-			android:layout_width="100dp"
-			android:layout_height="60dp"
+			android:layout_width="100sp"
+			android:layout_height="60sp"
 			android:text="@string/background_blur_button_refresh"
 			android:id="@+id/refreshWallpaper"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_alignTop="@+id/backgroundBlurMessage"
 			android:layout_alignEnd="@+id/frame3"
-			android:layout_alignRight="@+id/frame3"
-			android:layout_marginEnd="15dp"
-			android:layout_marginRight="15dp"
+			android:layout_marginEnd="15sp"
 			/>
-
 		<ProgressBar
-			style="?android:attr/progressBarStyleHorizontal"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/progressBar"
 			android:layout_below="@+id/seekBar"
 			android:layout_alignStart="@+id/frame3"
-			android:layout_alignLeft="@+id/frame3"
 			android:layout_alignEnd="@+id/frame3"
-			android:layout_alignRight="@+id/frame3"
 			android:indeterminate="true"
 			android:visibility="invisible"
 			/>
-
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="50dp"
+			android:layout_height="50sp"
 			android:id="@+id/frame4"
-			android:layout_marginLeft="10dp"
-			android:layout_marginRight="10dp"
-			android:layout_marginTop="20dp"
+			android:layout_marginLeft="10sp"
+			android:layout_marginRight="10sp"
+			android:layout_marginTop="20sp"
 			android:layout_alignParentStart="true"
-			android:layout_alignParentLeft="true"
 			android:layout_alignParentEnd="true"
-			android:layout_alignParentRight="true"
 			android:layout_below="@+id/frame3"
 			/>
-
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="50dp"
+			android:layout_height="50sp"
 			android:id="@+id/NFCTagsSeparator"
 			android:layout_alignStart="@+id/frame4"
-			android:layout_alignLeft="@+id/frame4"
 			android:layout_alignEnd="@+id/frame4"
-			android:layout_alignRight="@+id/frame4"
 			android:layout_alignTop="@+id/frame4"
 			/>
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -325,48 +232,39 @@
 			android:text="@string/nfc_tags"
 			android:id="@+id/NFCTagTitle"
 			android:textStyle="bold"
-			android:layout_marginTop="10dp"
+			android:layout_marginTop="10sp"
 			android:layout_alignTop="@+id/frame4"
 			android:layout_centerHorizontal="true"
 			/>
-
 		<ImageButton
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/newTag"
 			android:layout_alignEnd="@+id/frame4"
-			android:layout_alignRight="@+id/frame4"
 			android:src="@drawable/ic_content_new"
 			android:layout_alignTop="@+id/frame4"
 			android:contentDescription="@string/new_tag_description"
-			android:layout_marginTop="3dp"
-			android:layout_marginEnd="3dp"
-			android:layout_marginRight="3dp"
+			android:layout_marginTop="3sp"
+			android:layout_marginEnd="3sp"
 			android:layout_alignBottom="@+id/NFCTagsSeparator"
-			android:layout_marginBottom="3dp"
+			android:layout_marginBottom="3sp"
 			/>
-
 		<ListView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/listView"
 			android:layout_below="@+id/NFCTagsSeparator"
-			android:layout_marginRight="10dp"
+			android:layout_marginRight="10sp"
 			android:drawSelectorOnTop="true"
 			android:layout_alignParentStart="true"
-			android:layout_alignParentLeft="true"
 			android:layout_alignParentEnd="true"
-			android:layout_alignParentRight="true"
-			android:layout_marginTop="3dp"
+			android:layout_marginTop="3sp"
 			android:layout_alignStart="@+id/frame4"
-			android:layout_alignLeft="@+id/frame4"
 			android:layout_alignEnd="@+id/frame4"
-			android:layout_alignRight="@+id/frame4"
-			android:layout_marginLeft="10dp"
-			android:dividerHeight="3dp"
+			android:layout_marginLeft="10sp"
+			android:dividerHeight="3sp"
 			android:divider="@null"
 			/>
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -375,9 +273,8 @@
 			android:id="@+id/noTags"
 			android:layout_below="@+id/NFCTagsSeparator"
 			android:layout_centerHorizontal="true"
-			android:layout_marginTop="15dp"
+			android:layout_marginTop="15sp"
 			android:visibility="invisible"
 			/>
-
 	</RelativeLayout>
 </ScrollView>
