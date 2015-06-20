@@ -178,6 +178,13 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
+				@Override
+				public void uncaughtException(Thread thread, Throwable e) {
+					Log.e(TAG, "error e=" + e, e);
+					finish();
+				}
+			});
 		new com.github.anrwatchdog.ANRWatchDog(3000 /*timeout*/).start();
 
 		// Get screen density and calculate disableStatusBar view height
