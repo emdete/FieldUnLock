@@ -24,7 +24,6 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/time_text_no_time"
-			android:textColor="@color/white"
 			android:textSize="44sp"
 			android:layout_toLeftOf="@id/ruler"
 			/>
@@ -36,7 +35,6 @@
 			android:text="@string/date_text_no_date"
 			android:layout_toRightOf="@id/ruler"
 			android:layout_alignTop="@id/time"
-			android:textColor="@color/white"
 			tools:text="abv"
 			/>
 		<TextView
@@ -47,7 +45,6 @@
 			android:text="@string/battery_text_no_battery"
 			android:layout_toRightOf="@id/ruler"
 			android:layout_alignBottom="@id/time"
-			android:textColor="@color/white_90"
 			/>
 	</RelativeLayout>
 	<TextView
@@ -55,9 +52,8 @@
 		android:gravity="center"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
-		android:text="Wrong PIN"
+		tools:text="Wrong PIN"
 		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:textColor="@color/white_90"
 		/>
 	<TextView
 		android:id="@+id/pinInput"
@@ -65,9 +61,8 @@
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:maxLength="32"
-		android:text="68b329da9893e34099c7d8ad5cb9c940"
+		tools:text="68b329da9893e34099c7d8ad5cb9c940"
 		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:textColor="@color/white_90"
 		/>
 	<LinearLayout
 		android:layout_width="match_parent"

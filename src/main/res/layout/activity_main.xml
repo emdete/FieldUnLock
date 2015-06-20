@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="@color/grey_background"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/scrollView"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
 	>
 
 	<RelativeLayout
@@ -18,7 +17,6 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="80dp"
-			android:background="@color/frame_background"
 			android:id="@+id/frame1"
 			android:layout_marginLeft="10dp"
 			android:layout_marginTop="10dp"
@@ -33,7 +31,6 @@
 		<View
 			android:layout_width="wrap_content"
 			android:layout_height="2dp"
-			android:background="@color/black_10"
 			android:id="@+id/shadow1"
 			android:layout_below="@+id/frame1"
 			android:layout_alignStart="@+id/frame1"
@@ -52,7 +49,6 @@
 			android:layout_alignBottom="@+id/pinEdit"
 			android:layout_toStartOf="@+id/pinEdit"
 			android:layout_toLeftOf="@+id/pinEdit"
-			android:textColor="@color/blue"
 			/>
 
 		<EditText
@@ -67,7 +63,6 @@
 			android:layout_marginTop="20dp"
 			android:layout_alignTop="@+id/frame1"
 			android:layout_centerHorizontal="true"
-			android:textColor="@color/blue"
 			android:layout_marginStart="5dp"
 			android:layout_marginLeft="5dp"
 			android:layout_marginEnd="10dp"
@@ -85,7 +80,6 @@
 			android:id="@+id/setPin"
 			android:layout_toEndOf="@+id/pinEdit"
 			android:layout_toRightOf="@+id/pinEdit"
-			android:textColor="@color/white"
 			android:layout_alignTop="@+id/frame1"
 			android:layout_marginTop="16dp"
 			android:textAppearance="?android:attr/textAppearanceMedium"
@@ -96,7 +90,6 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="110dp"
-			android:background="@color/frame_background"
 			android:id="@+id/frame2"
 			android:layout_below="@+id/frame1"
 			android:layout_marginLeft="10dp"
@@ -111,7 +104,6 @@
 		<View
 			android:layout_width="wrap_content"
 			android:layout_height="2dp"
-			android:background="@color/black_10"
 			android:id="@+id/shadow2"
 			android:layout_below="@+id/frame2"
 			android:layout_alignStart="@+id/frame2"
@@ -123,7 +115,6 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="40dp"
-			android:background="@color/blue"
 			android:id="@+id/lockScreenSeparator"
 			android:layout_alignStart="@+id/frame2"
 			android:layout_alignLeft="@+id/frame2"
@@ -141,7 +132,6 @@
 			android:textStyle="bold"
 			android:layout_marginTop="5dp"
 			android:layout_alignTop="@+id/frame2"
-			android:textColor="@color/white_95"
 			android:layout_centerHorizontal="true"
 			/>
 
@@ -165,7 +155,6 @@
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="@string/lockscreen_disabled"
 			android:id="@+id/enabled_disabled"
-			android:textColor="@color/red"
 			android:layout_toEndOf="@+id/lockscreen_enabled_disabled"
 			android:layout_below="@+id/lockscreen_enabled_disabled"
 			android:layout_alignLeft="@+id/lockscreen_enabled_disabled"
@@ -188,7 +177,6 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="125dp"
-			android:background="@color/frame_background"
 			android:id="@+id/frame3"
 			android:layout_below="@+id/frame2"
 			android:layout_marginLeft="10dp"
@@ -203,7 +191,6 @@
 		<View
 			android:layout_width="wrap_content"
 			android:layout_height="2dp"
-			android:background="@color/black_10"
 			android:id="@+id/shadow3"
 			android:layout_below="@+id/frame3"
 			android:layout_alignStart="@+id/frame3"
@@ -215,7 +202,6 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="40dp"
-			android:background="@color/blue"
 			android:id="@+id/backgroundBlurSeparator"
 			android:layout_alignStart="@+id/frame3"
 			android:layout_alignLeft="@+id/frame3"
@@ -233,7 +219,6 @@
 			android:layout_alignTop="@+id/frame3"
 			android:layout_marginTop="8dp"
 			android:textStyle="bold"
-			android:textColor="@color/white_95"
 			android:layout_centerHorizontal="true"
 			/>
 
@@ -287,7 +272,6 @@
 			android:text="@string/background_blur_button_refresh"
 			android:id="@+id/refreshWallpaper"
 			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:textColor="@color/white"
 			android:layout_alignTop="@+id/backgroundBlurMessage"
 			android:layout_alignEnd="@+id/frame3"
 			android:layout_alignRight="@+id/frame3"
@@ -312,7 +296,6 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="50dp"
-			android:background="@color/frame_background"
 			android:id="@+id/frame4"
 			android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp"
@@ -327,7 +310,6 @@
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="50dp"
-			android:background="@color/blue"
 			android:id="@+id/NFCTagsSeparator"
 			android:layout_alignStart="@+id/frame4"
 			android:layout_alignLeft="@+id/frame4"
@@ -345,7 +327,6 @@
 			android:textStyle="bold"
 			android:layout_marginTop="10dp"
 			android:layout_alignTop="@+id/frame4"
-			android:textColor="@color/white_95"
 			android:layout_centerHorizontal="true"
 			/>
 
@@ -395,7 +376,6 @@
 			android:layout_below="@+id/NFCTagsSeparator"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="15dp"
-			android:textColor="#696969"
 			android:visibility="invisible"
 			/>
 

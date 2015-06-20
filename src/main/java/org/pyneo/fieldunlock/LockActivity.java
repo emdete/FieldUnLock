@@ -457,10 +457,10 @@ public class LockActivity extends Activity implements View.OnClickListener, View
 
 		// Set text color depending on battery level
 		if (batteryLevel > 15)
-			battery.setTextColor(getResources().getColor(R.color.white_90));
+			battery.setTextColor(getResources().getColor(R.color.white));
 
 		else
-			battery.setTextColor(getResources().getColor(R.color.light_red));
+			battery.setTextColor(getResources().getColor(R.color.red));
 	}
 
 	// Returns the current battery level

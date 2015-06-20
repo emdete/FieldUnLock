@@ -6,7 +6,6 @@
 	android:descendantFocusability="blocksDescendants"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="@color/frame_background"
 	>
 
 	<TextView
@@ -36,7 +35,6 @@
 		android:layout_alignStart="@+id/backgroundBlurValue"
 		android:layout_alignLeft="@+id/backgroundBlurValue"
 		android:layout_marginTop="3dp"
-		android:textColor="@color/blue"
 		android:paddingBottom="7dp"
 		android:layout_alignEnd="@+id/backgroundBlurValue"
 		android:layout_alignRight="@+id/backgroundBlurValue"
@@ -45,7 +43,6 @@
 	<View
 		android:layout_width="wrap_content"
 		android:layout_height="2dp"
-		android:background="@color/black_15"
 		android:id="@+id/shadow"
 		android:layout_below="@+id/longPress"
 		android:layout_alignParentStart="true"
