@@ -15,7 +15,7 @@
 		>
 		<Space
 			android:id="@+id/ruler"
-			android:layout_width="8sp"
+			android:layout_width="2sp"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
 			/>
@@ -23,26 +23,28 @@
 			android:id="@+id/time"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/time_text_no_time"
-			android:textSize="44sp"
+			tools:text="@string/time_text_no_time"
+			android:textStyle="bold"
+			android:textSize="60sp"
 			android:layout_toLeftOf="@id/ruler"
 			/>
 		<TextView
 			android:id="@+id/date"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:text="@string/date_text_no_date"
+			android:textSize="34sp"
+			android:padding="5dp"
+			tools:text="@string/date_text_no_date"
 			android:layout_toRightOf="@id/ruler"
 			android:layout_alignTop="@id/time"
-			tools:text="abv"
 			/>
 		<TextView
 			android:id="@+id/battery"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:text="@string/battery_text_no_battery"
+			android:textSize="18sp"
+			android:padding="5dp"
+			tools:text="@string/battery_text_no_battery"
 			android:layout_toRightOf="@id/ruler"
 			android:layout_alignBottom="@id/time"
 			/>
@@ -63,12 +65,13 @@
 		android:maxLength="32"
 		tools:text="68b329da9893e34099c7d8ad5cb9c940"
 		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:padding="20dp"
 		/>
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:padding="30dp"
+		android:padding="50dp"
 		>
 		<LinearLayout
 			android:layout_width="match_parent"

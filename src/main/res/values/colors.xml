@@ -9,7 +9,7 @@
 	<color name="navigationBar" type="color">#000000</color>
 	<!-- state colors: -->
 	<color name="white">#ffffff</color>
-	<color name="blue">#0000dd</color>
+	<color name="amber">#ffdd00</color>
 	<color name="red">#cc1100</color>
 	<color name="green">#33bb33</color>
 </resources>

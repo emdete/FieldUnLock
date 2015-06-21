@@ -170,7 +170,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 			if (convertView == null)
 				convertView = this.parentActivity.getLayoutInflater().inflate(R.layout.list_view_tags, null);
 
-			TextView text = (TextView) convertView.findViewById(R.id.backgroundBlurValue);
+			TextView text = (TextView) convertView.findViewById(R.id.background_blur_value);
 
 			JSONObject jsonData = getItem(position);
 
@@ -201,7 +201,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 
 		if (actionBarTitleView != null) {
 			actionBarTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f);
-			actionBarTitleView.setTextColor(getResources().getColor(R.color.blue));
+			actionBarTitleView.setTextColor(getResources().getColor(R.color.amber));
 		}
 
 		setContentView(R.layout.activity_main);
@@ -271,17 +271,17 @@ public class MainActivity extends Activity implements View.OnClickListener,
 		}
 
 		// Initialize layout items
-		pinEdit = (EditText) findViewById(R.id.pinEdit);
+		pinEdit = (EditText) findViewById(R.id.pin_edit);
 		pinEdit.setImeOptions(EditorInfo.IME_ACTION_DONE);
 		Button setPin = (Button) findViewById(R.id.setPin);
 		ImageButton newTag = (ImageButton) findViewById(R.id.newTag);
 		enabled_disabled = (TextView) findViewById(R.id.enabled_disabled);
 		Switch toggle = (Switch) findViewById(R.id.toggle);
-		seekBar = (SeekBar) findViewById(R.id.seekBar);
-		progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		Button refreshWallpaper = (Button) findViewById(R.id.refreshWallpaper);
+		seekBar = (SeekBar) findViewById(R.id.seek_bar);
+		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+		Button refreshWallpaper = (Button) findViewById(R.id.refresh_wallpaper);
 		listView = (ListView) findViewById(R.id.listView);
-		backgroundBlurValue = (TextView) findViewById(R.id.backgroundBlurValue);
+		backgroundBlurValue = (TextView) findViewById(R.id.background_blur_value);
 		noTags = (TextView) findViewById(R.id.noTags);
 
 		// Initialize TagAdapter
@@ -831,7 +831,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 
 		// If 'Refresh wallpaper' pressed, check if Android 4.2 or above, if yes
 		// Store new blur var, if blur bigger than 0 re-blur wallpaper
-		else if (v.getId() == R.id.refreshWallpaper) {
+		else if (v.getId() == R.id.refresh_wallpaper) {
 			if (Build.VERSION.SDK_INT > 16) {
 				try {
 					settings.put("blur", blur);
@@ -1218,7 +1218,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 
 		if (actionBarTitleView != null) {
 			actionBarTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f);
-			actionBarTitleView.setTextColor(getResources().getColor(R.color.blue));
+			actionBarTitleView.setTextColor(getResources().getColor(R.color.amber));
 		}
 	}
 }
