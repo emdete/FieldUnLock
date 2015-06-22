@@ -64,7 +64,7 @@
 	<string name="rename_tag_dialog_button">Renomear</string>
 	<!-- -->
 	<string name="yes_button">Sim</string>
-	<string name="ok_button">OK</string>
+	<string name="pin_ok">OK</string>
 	<string name="no_button">Não</string>
 	<!-- -->
 	<string name="toast_pin_set">PIN definido com êxito</string>

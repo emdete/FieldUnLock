@@ -273,13 +273,13 @@ public class MainActivity extends Activity implements View.OnClickListener,
 		// Initialize layout items
 		pinEdit = (EditText) findViewById(R.id.pin_edit);
 		pinEdit.setImeOptions(EditorInfo.IME_ACTION_DONE);
-		Button setPin = (Button) findViewById(R.id.setPin);
+		View setPin = findViewById(R.id.pin_ok);
 		ImageButton newTag = (ImageButton) findViewById(R.id.newTag);
 		enabled_disabled = (TextView) findViewById(R.id.enabled_disabled);
 		Switch toggle = (Switch) findViewById(R.id.toggle);
 		seekBar = (SeekBar) findViewById(R.id.seek_bar);
 		progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-		Button refreshWallpaper = (Button) findViewById(R.id.refresh_wallpaper);
+		View refreshWallpaper = findViewById(R.id.refresh_wallpaper);
 		listView = (ListView) findViewById(R.id.listView);
 		backgroundBlurValue = (TextView) findViewById(R.id.background_blur_value);
 		noTags = (TextView) findViewById(R.id.noTags);
@@ -786,7 +786,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 	@Override
 	public void onClick(View v) {
 		// If OK(setPin) clicked, ask user if sure; if yes, store PIN; else, go back
-		if (v.getId() == R.id.setPin) {
+		if (v.getId() == R.id.pin_ok) {
 			// If PIN length between 4 and 6, store PIN and toast successful
 			if (pinEdit.length() >= 4 && pinEdit.length() <= 6) {
 				new AlertDialog.Builder(this)
@@ -885,7 +885,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 										runOnUiThread(new Runnable() {
 											@Override
 											public void run() {
-												progressBar.setVisibility(View.INVISIBLE);
+												progressBar.setVisibility(View.GONE);
 
 												if (finalStored) {
 													Toast toast = Toast.makeText(getApplicationContext(),
@@ -901,7 +901,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 										runOnUiThread(new Runnable() {
 											@Override
 											public void run() {
-												progressBar.setVisibility(View.INVISIBLE);
+												progressBar.setVisibility(View.GONE);
 
 												Toast toast = Toast.makeText(getApplicationContext(),
 														R.string.toast_wallpaper_not_refreshed,

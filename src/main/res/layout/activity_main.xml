@@ -10,13 +10,14 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:paddingBottom="10sp"
+		android:paddingRight="5sp"
 		>
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
 			android:paddingBottom="10sp"
+			android:gravity="right"
 			>
 			<EditText
 				android:layout_width="150sp"
@@ -24,40 +25,42 @@
 				android:inputType="numberPassword"
 				android:ems="10"
 				android:id="@+id/pin_edit"
+				android:layout_gravity="center_vertical"
 				android:maxLength="64"
 				android:hint="@string/enter_pin_hint"
 				android:gravity="center"
 				/>
-			<Button
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/ok_button"
-				android:id="@+id/setPin"
+			<ImageButton
+				android:id="@+id/pin_ok"
+				android:layout_width="48sp"
+				android:layout_height="48sp"
+				android:scaleType="centerInside"
+				android:text="@string/pin_ok"
+				android:background="@null"
+				android:src="@drawable/ic_store"
 				/>
 		</LinearLayout>
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingBottom="10sp"
+			android:gravity="right"
 			>
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/nfc_lockscreen"
-				android:id="@+id/lockScreenTitle"
-				android:textStyle="bold"
-				/>
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:text="@string/lockscreen_enabled_disabled"
+				android:layout_gravity="center_vertical"
 				android:id="@+id/lockscreen_enabled_disabled"
+				android:paddingRight="5sp"
 				/>
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
 				android:text="@string/lockscreen_disabled"
 				android:id="@+id/enabled_disabled"
+				android:paddingRight="7sp"
 				/>
 			<Switch
 				android:layout_width="wrap_content"
@@ -69,51 +72,62 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingBottom="10sp"
+			android:gravity="right"
 			>
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
 				tools:text="15"
 				android:id="@+id/background_blur_value"
 				/>
 			<SeekBar
-				android:layout_width="wrap_content"
+				android:layout_width="200dp"
 				android:layout_height="wrap_content"
 				android:id="@+id/seek_bar"
+				android:layout_gravity="center_vertical"
 				android:max="25"
 				android:progress="15"
 				/>
-			<Button
-				android:layout_width="100sp"
-				android:layout_height="60sp"
-				android:text="@string/background_blur_button_refresh"
-				android:id="@+id/refresh_wallpaper"
-				/>
 			<ProgressBar
 				android:layout_width="wrap_content"
+				android:layout_gravity="center_vertical"
 				android:layout_height="wrap_content"
 				android:id="@+id/progress_bar"
 				android:indeterminate="true"
-				android:visibility="invisible"
+				android:visibility="gone"
+				/>
+			<ImageButton
+				android:id="@+id/refresh_wallpaper"
+				android:layout_width="48sp"
+				android:layout_height="48sp"
+				android:scaleType="centerInside"
+				android:text="@string/background_blur_button_refresh"
+				android:background="@null"
+				android:src="@drawable/ic_refresh"
 				/>
 		</LinearLayout>
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingBottom="10sp"
+			android:gravity="right"
 			>
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/nfc_tags"
+				android:layout_gravity="center_vertical"
 				android:id="@+id/NFCTagTitle"
 				android:textStyle="bold"
 				/>
 			<ImageButton
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
 				android:id="@+id/newTag"
-				android:src="@drawable/ic_content_new"
+				android:layout_width="48sp"
+				android:layout_height="48sp"
+				android:scaleType="centerInside"
+				android:background="@null"
+				android:src="@drawable/ic_plus"
 				android:contentDescription="@string/new_tag_description"
 				/>
 		</LinearLayout>
